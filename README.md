@@ -1,0 +1,1 @@
+This is the code for creating a static site generator using bootdev's course on the subject.
