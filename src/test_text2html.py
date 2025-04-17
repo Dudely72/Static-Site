@@ -40,3 +40,6 @@ class TestText2HTML(unittest.TestCase):
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.value, "")
         self.assertEqual(html_node.props, {"src":node.url, "alt":node.text})
+
+if __name__ == "__main__":
+    unittest.main()
