@@ -27,16 +27,27 @@ class HTMLNode:
         return f"HTMLNode(tag={self.tag!r}, value={self.value!r}, children={self.children!r}, props={self.props!r})"
 
 class LeafNode(HTMLNode):             #child node with no children, purely tag and value with optional props
+    SELF_CLOSING_TAGS = {"img", "br", "hr", "input", "meta", "link"}
+    
     def __init__(self, tag, value, props=None):
         super().__init__(tag=tag, value=value, children=None, props=props)
         
     
     def to_html(self):                #converts leaf tag/value to html
-        if self.value == None:
-            raise ValueError("LeafNode requires a value")
-        if self.tag == None:          #returns raw text if given no tag
-            return self.value        
-        return f"<{self.tag}{self.props_to_html() or ''}>{self.value}</{self.tag}>" #works whether props are present or not, returns HTML
+        if self.tag is None:
+            if self.value is None:
+                raise ValueError("LeafNode requires a value")
+            return self.value
+        
+        props_str = self.props_to_html() or ""
+
+        if self.tag in self.SELF_CLOSING_TAGS:
+            return f"<{self.tag}{props_str}>"
+        
+        if self.value is None:
+            raise ValueError(f"LeafNode with tag <{self.tag}> requires a value")
+        
+        return f"<{self.tag}{props_str}>{self.value}</{self.tag}>"
 
         
 class ParentNode(HTMLNode):
