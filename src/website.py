@@ -23,14 +23,18 @@ def generate_page(from_path, template_path, dest_path, basepath ="/"):
 
     title = extract_title(markdown_content)
 
+    if not basepath.endswith("/"):
+        basepath += "/"
+    
     filled_template = template_content.replace("{{ Title }}", title)
     filled_template = filled_template.replace("{{ Content }}", html_content)
 
-    if not basepath.endswith("/"):
-        basepath += "/"
+    
 
     filled_template = filled_template.replace('href"/', f'href="{basepath}')
     filled_template = filled_template.replace('src="/', f'src="{basepath}')
+    filled_template = filled_template.replace('href"/"', f'href="{basepath}"')
+    filled_template = filled_template.replace('src"/"', f'src="{basepath}"')
 
     os.makedirs(os.path.dirname(dest_path), exist_ok=True)
 
@@ -49,5 +53,5 @@ def generate_pages_recursively(dir_path_content, template_path, dest_dir_path, b
 
                 os.makedirs(os.path.dirname(dest_path), exist_ok=True)
 
-                generate_page(from_path=markdown_path, template_path=template_path, dest_path=dest_path, basepath=basepath)
+                generate_page(from_path=markdown_path, template_path=template_path, dest_path=dest_path, basepath="/Static-Site/")
                 
