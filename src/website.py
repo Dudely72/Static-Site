@@ -31,10 +31,10 @@ def generate_page(from_path, template_path, dest_path, basepath ="/"):
 
     
 
-    filled_template = filled_template.replace('href"/', f'href="{basepath}')
+    filled_template = filled_template.replace('href="/', f'href="{basepath}')
     filled_template = filled_template.replace('src="/', f'src="{basepath}')
-    filled_template = filled_template.replace('href"/"', f'href="{basepath}"')
-    filled_template = filled_template.replace('src"/"', f'src="{basepath}"')
+    filled_template = filled_template.replace('href="/"', f'href="{basepath}"')
+    filled_template = filled_template.replace('src="/"', f'src="{basepath}"')
 
     os.makedirs(os.path.dirname(dest_path), exist_ok=True)
 
